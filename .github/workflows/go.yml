@@ -7,6 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
+      
+    - name: Test
+      run: go test -v ./cmd/web
 
   build:
     runs-on: ubuntu-latest
@@ -23,5 +35,16 @@ jobs:
 
     - name: Test
       run: go test -v ./cmd/web
+    - name: Deploy
+      run: echo Working
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
     - name: Deploy
       run: echo Working
