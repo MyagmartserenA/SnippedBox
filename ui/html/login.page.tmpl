@@ -1,7 +1,9 @@
 {{template "base" .}}
+
 {{define "title"}}Login{{end}}
-{{define "main"}}
-<form action='/user/login' method='POST' novalidate>
+
+{{define "body"}}
+<form action='/users/login' method='POST' novalidate>
     <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
     {{with .Form}}
         {{with .Errors.Get "generic"}}
@@ -18,6 +20,6 @@
         <div>
             <input type='submit' value='Login'>
         </div>
-        {{end}} 
+    {{end}}
 </form>
 {{end}}

@@ -1,46 +1,44 @@
 {{define "base"}}
-<!doctype html>
-<html lang='en'>
-    <head>
-        <meta charset='utf-8'>
-        <title>{{template "title" .}}- Snippetbox</title>
-        <link rel='stylesheet' href='/static/css/main.css'>
-        <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
-    </head>
-    <body>
-        <header>
-            <h1><a href='/'>Snippetbox</a></h1>
-        </header>
-        <nav>
-            <div>
-                <a href='/'>Home</a>
-                <a href='/about'>About</a>
-                {{if .IsAuthenticated}}
-                    <a href='/snippet/create'>Create snippet</a>
+    <!DOCTYPE html>
+    <html>
+        <head>
+          <meta charset="utf-8">
+          <title>{{template "title" .}} - Snippetbox </title>
+          <link rel="stylesheet" href="/static/css/main.css">
+          <link rel="shortcut icom" href="/static/img/favicon.ico" type="image/x-icon">
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ub">
+        </head>
+        <body>
+            <header>
+                <h1><a href="/">Snippetbox</a></h1>
+            </header>
+            <nav>
+                <div>
+                    <a href="/">Home</a>
+                    {{if .AuthenticatedUser}}
+                        <a href="/snippets/create">Create snippet</a>
+                    {{end}}
+                </div>
+                <div>
+                    {{if .AuthenticatedUser }}
+                        <form action="/users/logout" method="POST">
+                            <input type="hidden" name='csr_token' value='{{.CSRFToken}}'>
+                            <button>Log out</button>
+                        </form>
+                    {{else}}
+                        <a href="/users/signup">Sign up</a>
+                        <a href="/users/login">Log in </a>
+                    {{end}}
+                </div>
+            </nav>
+            <section>
+                {{with .Flash}}
+                <div class='flash'>{{.}}</div>
                 {{end}}
-            </div>
-            <div>
-                {{if .IsAuthenticated}}
-                <form action='/user/logout' method='POST'>
-                    <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
-                    <a href='/user/profile'>Profile</a>
-                    <button>Logout</button>
-                </form>
-                {{else}}
-                    <a href='/user/signup'>Signup</a>
-                    <a href='/user/login'>Login</a>
-                {{end}}
-            </div>
-        </nav>
-        <main>
-            {{with .Flash}}
-            <div class='flash '>{{.}}</div>
-            {{end}}
-            {{template "main" .}}
-        </main>
-        {{template "footer" .}}
-        <script src="/static/js/main.js" type="text/javascript"></script>
-    </body>
-</html>
+                {{template "body" .}}
+            </section>
+            {{template "footer" .}}
+            <script src="/static/js/main.js" type="text/javascript"></script>
+        </body>
+    </html>
 {{end}}

@@ -6,10 +6,9 @@ import (
 )
 
 var (
-	ErrNoRecord = errors.New("models: no matching record found")
-
+	ErrNoRecord           = errors.New("models: no matching record found")
 	ErrInvalidCredentials = errors.New("models: invalid credentials")
-	ErrDuplicateEmail     = errors.New("models : duplicate email")
+	ErrDuplicateEmail     = errors.New("models: duplicate email")
 )
 
 type Snippet struct {
@@ -19,11 +18,11 @@ type Snippet struct {
 	Created time.Time
 	Expires time.Time
 }
+
 type User struct {
 	ID             int
 	Name           string
 	Email          string
 	HashedPassword []byte
 	Created        time.Time
-	Active         bool
 }

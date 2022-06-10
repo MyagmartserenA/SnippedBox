@@ -1,6 +1,9 @@
 {{template "base" .}}
+
 {{define "title"}}Snippet #{{.Snippet.ID}}{{end}}
-{{define "main"}}
+
+{{define "body"}}
+<div class='snippet'>
     {{with .Snippet}}
     <div class='snippet'>
         <div class='metadata'>
@@ -9,8 +12,8 @@
         </div>
         <pre><code>{{.Content}}</code></pre>
         <div class='metadata'>
-        <time>Created: {{humanDate .Created}}</time>
-        <time>Expires: {{humanDate .Expires}}</time>
+            <time>Created: {{humanDate .Created}}</time>
+            <time>Expires: {{humanDate .Expires}}</time>
         </div>
     </div>
     {{end}}

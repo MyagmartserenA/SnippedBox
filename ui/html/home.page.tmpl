@@ -2,24 +2,26 @@
 
 {{define "title"}}Home{{end}}
 
-{{define "main"}}
-    <h2> Lates Snippets</h2>
+{{define "body"}}
+    <h2>Latest Snippets</h2>
     {{if .Snippets}}
-        <table>
+    <table>
         <tr>
-            <th>Title</th>
-            <th>Created</th>
-            <th>ID</th>
+            <td>Title</td>
+            <td>Created</td>
+            <td>ID</td>
         </tr>
         {{range .Snippets}}
         <tr>
-            <td><a href='/snippet/{{.ID}}'><{{.Title}}</a></td>
+            <td>
+                <a href="/snippets/{{.ID}}">{{.Title}}</a>
+            </td>
             <td>{{humanDate .Created}}</td>
             <td>#{{.ID}}</td>
         </tr>
         {{end}}
-        </table>
-        {{else}}
-        <p> There's nothing to see her yet! </p>
+    </table>
+    {{else}}
+    <p>Nothing here yet!</p>
     {{end}}
 {{end}}

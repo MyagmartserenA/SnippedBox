@@ -8,7 +8,7 @@ import (
 	"unicode/utf8"
 )
 
-var EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+var EmailRX = regexp.MustCompile(`^[a-zA-Z\\_\\-\\.]+@[a-zA-Z\\_\\-\\.]+$`)
 
 type Form struct {
 	url.Values
@@ -16,7 +16,8 @@ type Form struct {
 }
 
 func New(data url.Values) *Form {
-	return &Form{data,
+	return &Form{
+		data,
 		errors(map[string][]string{}),
 	}
 }
@@ -35,45 +36,43 @@ func (f *Form) MaxLength(field string, d int) {
 	if value == "" {
 		return
 	}
+
 	if utf8.RuneCountInString(value) > d {
-		f.Errors.Add(field, fmt.Sprintf("This field is too long (maximum is %d characters)", d))
+		f.Errors.Add(field, fmt.Sprintf("This field is too long (maximum is %d)", d))
 	}
 }
 
-func (f *Form) PermitedValues(field string, opts ...string) {
+func (f *Form) PermittedValues(field string, opts ...string) {
 	value := f.Get(field)
 	if value == "" {
 		return
 	}
+
 	for _, opt := range opts {
 		if value == opt {
 			return
 		}
-		f.Errors.Add(field, "This field is invalid")
 	}
+
+	f.Errors.Add(field, "This field is invalid")
 }
+
 func (f *Form) MinLength(field string, d int) {
 	value := f.Get(field)
 	if value == "" {
 		return
 	}
 	if utf8.RuneCountInString(value) < d {
-		f.Errors.Add(field, fmt.Sprintf("This fiedl is too short (minimum is %d characters)", d))
+		f.Errors.Add(field, fmt.Sprintf("This field is too short (minimum is %d characters)", d))
 	}
 }
-func (f *Form) Password(field1, field2 string) {
-	value1 := f.Get(field1)
-	value2 := f.Get(field2)
-	if value1 != value2 {
-		f.Errors.Add(field2, "passwords must match")
-		return
-	}
-}
+
 func (f *Form) MatchesPattern(field string, pattern *regexp.Regexp) {
 	value := f.Get(field)
 	if value == "" {
 		return
 	}
+
 	if !pattern.MatchString(value) {
 		f.Errors.Add(field, "This field is invalid")
 	}
