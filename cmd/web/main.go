@@ -28,7 +28,7 @@ type contextKey string
 var contextKeyUser = contextKey("user")
 
 func main() {
-	dsn := flag.String("dsn", "web:leo123456@/snippetbox?parseTime=true", "MYSQL Database")
+	dsn := flag.String("dsn", "root:99754252@/snippetbox?parseTime=true", "MYSQL Database")
 	addr := flag.String("addr", ":8000", "HTTP Network Address")
 
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Seret")

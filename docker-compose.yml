@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 99754252
+      MYSQL_DATABASE: snippetbox
+  
+  web:
+    build: .
+    command:
+      /app/web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
